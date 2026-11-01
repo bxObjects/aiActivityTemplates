@@ -1,0 +1,324 @@
+#+title: aiActivityTemplates: Template Content for bisos.aiActivity
+
+* What This Repo Is
+
+This repo contains the *template content* consumed by
+[[https://github.com/bisos-pip/aiActivity][=bisos.aiActivity=]] --- it is *Part 2* of a two-part
+architecture:
+
+- *Part 1 --- the execution engine* --- =bisos.aiActivity= (PyPI:
+  =pipx install bisos.aiActivity=). The engine ships only the
+  =aiActivity.cs= command; it contains no template content.
+- *Part 2 --- the templates (this repo and two more)* --- baseline invariants under
+  =mother/= plus one directory per activity (=bisos-pip=, =xu-single=,
+  =blee-panels=, =lcnt=, ...). This repo is the templates base; its files are links into
+  [[https://github.com/bxexamples/aiTemplates-workFlow][aiTemplates-workFlow]] and
+  [[https://github.com/bxexamples/aiTemplates-DE][aiTemplates-DE]]. Clone the three side by side:
+
+  #+begin_src bash
+  cd ~
+  git clone https://github.com/bxexamples/aiActivityTemplates
+  git clone https://github.com/bxexamples/aiTemplates-workFlow
+  git clone https://github.com/bxexamples/aiTemplates-DE
+  #+end_src
+
+  The engine auto-detects =~/aiActivityTemplates=; elsewhere, point it at your clone with
+  =userConfig_set --parName=templates=.
+
+The engine and the templates are versioned independently. Improvements
+to the engine ship via =pipx upgrade=; improvements to the templates
+propagate to every project that has been =initiate=-d against them
+(because the shared invariants are installed as symlinks --- see the
+engine's README for the mechanics).
+
+For the model behind all of this --- what an *AI Activity* is, why the
+engine and templates are split, and how Claude Code consumes the
+installed layout --- read the engine's README:
+
+[[https://github.com/bisos-pip/aiActivity][=bisos.aiActivity= on GitHub]]
+
+* The Concept of an AI Activity (Brief)
+
+An *AI Activity* is a durable, collaborative effort between a human and
+Claude Code toward a specific purpose --- writing a document, building
+new software, enhancing existing software, and so on. Unlike a one-shot
+chat, an activity spans many sessions across time and machines. Its
+state lives in files under version control.
+
+Two org-mode files encode the activity:
+
+- =AI-Activity.org= --- the human's *usual way of doing that kind of
+  work* (conventions, preferred libraries, patterns). Reusable across
+  every project of that kind. This repo ships one =AI-Activity.org= per
+  activity directory.
+- =AI-WorkPlan.org= --- the specific effort's stages and TODOs. Per-effort,
+  edited freely, org-archived as work completes. Paired with
+  =AI-DevStatus.org= (where the effort stands right now). This repo
+  ships starter versions of both under each activity directory.
+
+Activities are *classes of work*; WorkPlans are *instances*. This repo
+holds the classes; each project that is =initiate=-d gets its own
+instance.
+
+* Activities Available in This Directory
+
+|----------------+---------------+------------------------------------------------------|
+| Activity       | Directory     | Comments                                             |
+| Category       | (of Activity) |                                                      |
+|----------------+---------------+------------------------------------------------------|
+|----------------+---------------+------------------------------------------------------|
+| Any            | [[mother][./mother]]      | Constant invariants: =CLAUDE.md=,   |
+|                |               | =AI-WORKFLOW.org=, =_claude/=, =initiateSub/=.       |
+|                |               | Symlinked into every activity below.                 |
+|----------------+---------------+------------------------------------------------------|
+| General        | [[basic][./basic]]       | Typically installed at a repo root that will contain |
+|                |               | multiple heterogeneous subprojects. Deliberately low |
+|                |               | specificity --- each nested =initiateSub= specifies  |
+|                |               | its own activity.                                    |
+|----------------+---------------+------------------------------------------------------|
+| Custom         | [[custom][./custom]]      | For projects whose conventions don't fit any         |
+|                |               | standard activity. Install with                      |
+|                |               | =--noLink=AI-Activity.org= so each project owns its  |
+|                |               | own =AI-Activity.org= (safe-copy, not symlink).      |
+|----------------+---------------+------------------------------------------------------|
+| Python (BISOS) | [[bisos-pip][./bisos-pip]]   | For building =bisos-pip= (BISOS PyPI) packages.      |
+|                | [[xu-single][./xu-single]]   | For single PyCS eXecution Unit scripts.              |
+|                | [[bisos-core][./bisos-core]]  | For BISOS-core / infrastructure work.                |
+|----------------+---------------+------------------------------------------------------|
+| Org            | [[blee-panels][./blee-panels]] | For Blee panel org-file authorship.                  |
+|----------------+---------------+------------------------------------------------------|
+| LaTeX          | [[lcnt][./lcnt]]        | For LCNT content (articles, books, presentations).   |
+|----------------+---------------+------------------------------------------------------|
+
+The =mother/= baseline is *symlinked into every activity*, not duplicated.
+The invariants (=CLAUDE.md=, =AI-WORKFLOW.org=) apply
+uniformly; per-activity content (=AI-Activity.org=, initial
+=AI-WorkPlan.org= / =AI-DevStatus.org=, optional =_skills/=) overrides
+or extends where relevant.
+
+* Per-Activity Notes
+
+Details on when to pick each activity, what conventions it encodes, and
+what (if anything) it ships beyond the standard file set.
+
+** <<mother>> --- constant invariants
+
+Not an activity you =initiate= directly. Its contents (=CLAUDE.md=,
+=AI-WORKFLOW.org=, =_claude/settings.json=,
+=_claude/commands/=, =_skills/=, =initiateSub/CLAUDE.md=) are what every =initiate=
+symlinks in. ByStar-wide conventions that should apply to every activity
+live here.
+
+A templates tree is two layers, and =mother/= holds most of the first:
+
+- *BISOS-AI-Workflow* --- what drives an AI-Activity, the same for everyone: the =/bx-*= slash
+  commands (=_claude/commands/=, one set for every activity, with no per-activity override), the
+  workflow skills (=_skills/=: =authoring-skills=, =bx-ai-commands-authorship=), =AI-WORKFLOW.org=,
+  =CLAUDE.md= and the seeds of =AI-DevStatus.org= / =AI-WorkPlan.org=, the generic activities. Adopt
+  it as-is: near zero cost.
+- *BISOS-Digital-Ecosystem-Skills* --- the BISOS / Blee / ByStar skills and activities. They encode
+  our ecosystem: keep them as examples, write your own.
+
+*This directory is assembled* (since 2026-10-20): its =mother/= and activities are generated links,
+made by =aiActivityAssemble.cs= ([[https://github.com/bisos-pip/aiActivity][bisos.aiActivity]]) from
+two inputs with fixed names, =aiTemplates-workFlow= (layer 1) and =aiTemplates-DE= (layer 2), here
+links to the sibling clones =../aiTemplates-workFlow= and =../aiTemplates-DE=, committed with this
+repo, so a side-by-side clone needs no further step. On a BISOS host the BISOS templates
+(=/bisos/apps/defaults/ai-templates=) are a link to this directory. To fork: take
+=aiTemplates-workFlow= as it is (a clone and a link), put your own skills and activities in your own
+=aiTemplates-DE=, and run =aiActivityAssemble.cs -i assemblyUpdate --base=<your templates directory>=.
+
+The engine's README ("Forking the Templates: Two Layers") has the details and the figures.
+
+Edit =mother/= carefully: changes propagate live to every project that
+has been =initiate=-d against this templates directory (that's the
+point of the symlink architecture). Forkers of this repo customize
+=mother/= to encode their own team's conventions.
+
+** <<basic>> --- general-purpose repo-root scaffold
+
+Pick =basic= when the target directory is a repo root that will contain
+multiple, heterogeneous subprojects, each with its own activity. =basic=
+establishes the invariant CLAUDE.md hierarchy at the top so that nested
+=initiateSub= calls in subdirectories can walk up and find it.
+
+Not appropriate for a leaf project doing one specific kind of work
+--- for those, pick the matching activity directly.
+
+** <<custom>> --- per-project template with owned AI-Activity.org
+
+Pick =custom= when the project's conventions don't fit any of the
+standard activities and you want to write your own =AI-Activity.org=
+without touching a shared template. Its =AI-Activity.org= is intended
+to be safe-copied (per project) rather than symlinked (shared).
+
+Install with the =--noLink=AI-Activity.org= flag:
+
+: aiActivity.cs -i initiate --activity=custom --noLink=AI-Activity.org
+
+(Or =initiateSub= with the same flag for a subproject overlay.)
+
+Without =--noLink=, =AI-Activity.org= would install as a symlink and
+edits would bleed into every other =custom= project. With =--noLink=,
+the target directory owns its own copy --- edit it freely to encode
+this project's specific conventions.
+
+Prefer a proper standard activity when your project fits one --- reach
+for =custom= only when nothing else applies.
+
+** <<bisos-pip>> --- building bisos-pip PyPI packages
+
+Pick this for authoring a =bisos-pip= Python package (a PyCS
+command-service unit installable via =pip= or =pipx=). Its
+=AI-Activity.org= describes the =bisos-pip= conventions: PyCS
+=cs.Cmnd= subclasses, poly-dblock authoring, =bisos.b= dependencies,
+=setup.py= structure, and the release workflow via =pypiProc.sh=.
+
+Ships =_skills/= (loaded on demand by Claude Code): =writing-cs-commands=,
+=dblock-authoring=, =readme-authorship=, =blee-panel-authorship=,
+=bisos-pip-release=. These are procedural knowledge only loaded when
+the current task matches --- see the engine README for the skills
+mechanism.
+
+** <<xu-single>> --- single PyCS eXecution Unit scripts
+
+Pick this for a standalone =.cs= or =.pcs= script that isn't part of a
+=bisos-pip= package. Simpler scope than =bisos-pip= --- no packaging,
+no PyPI, just a single-file PyCS command.
+
+** <<bisos-core>> --- BISOS-core / infrastructure work
+
+Pick this for work on BISOS-core packages and infrastructure --- lower
+layers of BISOS that are not =bisos-pip= application packages.
+
+** <<blee-panels>> --- Blee panel authorship
+
+Pick this for authoring Blee panels (org-mode files under
+=_nodeBase_/fullUsagePanel-en.org= etc.). Its =AI-Activity.org= covers
+the panel skeleton conventions and dblock content policy.
+
+** <<lcnt>> --- LCNT content authorship
+
+Pick this for authoring LCNT content: articles, books, presentations
+in LaTeX with XeLaTeX / HeVeA / reveal.js output paths. Its
+=AI-Activity.org= covers LCNT authoring conventions.
+
+* Using This Repo
+
+** 1. Install the engine
+
+#+begin_src bash
+pipx install bisos.aiActivity
+#+end_src
+
+** 2. Clone this repo to the canonical path
+
+#+begin_src bash
+git clone https://github.com/bxexamples/aiActivityTemplates ~/aiActivityTemplates
+#+end_src
+
+The engine auto-detects =~/aiActivityTemplates= on first invocation and
+persists it as the templates base --- *no explicit =userConfig_set= step
+is needed*. This is the zero-config path.
+
+Verify:
+
+#+begin_src bash
+aiActivity.cs -i userConfig_get --parName=templates
+#+end_src
+
+*If you prefer a different clone path*, run =userConfig_set= explicitly:
+
+#+begin_src bash
+git clone https://github.com/bxexamples/aiActivityTemplates /some/other/path
+aiActivity.cs -i userConfig_set --parName=templates --parValue=/some/other/path
+#+end_src
+
+Precedence when both exist: =~/aiActivityTemplates= wins over the
+BISOS-provisioned =/bisos/apps/defaults/ai-templates=, so a personal
+clone on a BISOS system automatically takes over.
+
+** 3. Initiate a project
+
+At a git repo root:
+
+#+begin_src bash
+aiActivity.cs -i initiate --root=repo --activity=bisos-pip
+#+end_src
+
+Or in the current directory:
+
+#+begin_src bash
+aiActivity.cs -i initiate --root=curDir --activity=bisos-pip
+#+end_src
+
+This creates the following at the target:
+
+*Constants* (symlinks to =mother/=):
+- =./CLAUDE.md=
+- =./=
+- =./AI-WORKFLOW.org=
+- =./.claude/settings.json=, =./.claude/commands/=, optionally =./.claude/skills/=
+
+*Activity file* (symlink to =<activity>/=):
+- =./AI-Activity.org=
+
+*Initial editable state* (safe-copies from =<activity>/=, dblock-expanded):
+- =./AI-DevStatus.org=
+- =./AI-WorkPlan.org=
+
+** 4. For nested subprojects: initiateSub
+
+When an ancestor directory has already been =initiate=-d, a nested
+subproject can install a slim overlay that inherits the invariants from
+the ancestor via Claude Code's =CLAUDE.md= walk-up:
+
+#+begin_src bash
+aiActivity.cs -i initiateSub --activity=bisos-pip
+#+end_src
+
+This installs only =CLAUDE.md= (slim; imports only the local trio),
+=AI-Activity.org= (symlink), =AI-DevStatus.org= (safe-copy), and
+=AI-WorkPlan.org= (safe-copy). No =AI-WORKFLOW.org=, or
+=.claude/= --- those come from the ancestor.
+
+* Customizing (Forking)
+
+The whole point of this repo being separate from the engine is that
+users can *fork it and customize* for their own conventions:
+
+- Fork =bxexamples/aiActivityTemplates= on GitHub.
+- Edit =mother/CLAUDE.md=, =mother/=, =mother/AI-WORKFLOW.org=
+  to reflect your team's conventions.
+- Add your own activity directories (=./my-team-python/=, =./my-lab-notes/=, ...).
+- =userConfig_set --parValue= your fork's local path.
+- Every project you =initiate= against the fork picks up your customizations.
+
+Because the invariants under =mother/= are installed as *symlinks* (not
+copies), edits you make to your fork's =mother/= propagate to every
+project you have =initiate=-d against that fork --- no re-run needed.
+
+* Also: BISOS-Specific Users
+
+Users on a BISOS system have this repo pre-cloned at
+=/bisos/apps/defaults/ai-templates=. The engine's auto-detect probes
+=~/aiActivityTemplates= first, then =/bisos/apps/defaults/ai-templates=
+--- so a BISOS user with no personal clone just picks up the system
+one; a BISOS user with a personal fork cloned to =~/aiActivityTemplates=
+transparently uses their fork instead, without any =userConfig_set=
+step.
+
+Within BISOS and Blee, the org-mode substrate that underpins the AI
+Activity state files extends further to source-code authorship itself
+through *COMEEGA* (Collaborative Org-Mode Enhanced Emacs Generalized
+Authorship). This is a BISOS/Blee integration detail; outside Blee the
+source files still work as ordinary Python, Bash, or Elisp, and the AI
+Activity model itself does not depend on COMEEGA.
+
+* See Also
+
+- Engine: [[https://github.com/bisos-pip/aiActivity][=bisos.aiActivity= on GitHub]]
+  --- PyPI, source, the full README explaining the AI Activity model,
+  the file hierarchy, and Claude Code's walk-up consumption.
+- BISOS overview: [[https://github.com/bxGenesis/start][Bootstrapping ByStar, BISOS and Blee]].
+- The book: [[https://github.com/bxplpc/120033][Nature of Polyexistentials]].

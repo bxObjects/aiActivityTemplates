@@ -1,0 +1,1 @@
+../../../aiTemplates-DE/mother/_skills/blee-pkg-authorship/SKILL.md

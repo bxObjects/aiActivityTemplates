@@ -1,0 +1,1 @@
+../aiTemplates-DE/pycs/bisos-capabilites.org
