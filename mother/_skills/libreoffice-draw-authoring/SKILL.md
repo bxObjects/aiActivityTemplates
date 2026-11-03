@@ -1,0 +1,1 @@
+../../../aiTemplates-DE/mother/_skills/libreoffice-draw-authoring/SKILL.md

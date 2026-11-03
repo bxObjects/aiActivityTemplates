@@ -12,14 +12,14 @@ architecture:
 - *Part 2 --- the templates (this repo and two more)* --- baseline invariants under
   =mother/= plus one directory per activity (=bisos-pip=, =xu-single=,
   =blee-panels=, =lcnt=, ...). This repo is the templates base; its files are links into
-  [[https://github.com/bxexamples/aiTemplates-workFlow][aiTemplates-workFlow]] and
-  [[https://github.com/bxexamples/aiTemplates-DE][aiTemplates-DE]]. Clone the three side by side:
+  [[https://github.com/bxObjects/aiTemplates-workFlow][aiTemplates-workFlow]] and
+  [[https://github.com/bxObjects/aiTemplates-DE][aiTemplates-DE]]. Clone the three side by side:
 
   #+begin_src bash
   cd ~
-  git clone https://github.com/bxexamples/aiActivityTemplates
-  git clone https://github.com/bxexamples/aiTemplates-workFlow
-  git clone https://github.com/bxexamples/aiTemplates-DE
+  git clone https://github.com/bxObjects/aiActivityTemplates
+  git clone https://github.com/bxObjects/aiTemplates-workFlow
+  git clone https://github.com/bxObjects/aiTemplates-DE
   #+end_src
 
   The engine auto-detects =~/aiActivityTemplates=; elsewhere, point it at your clone with
@@ -214,7 +214,7 @@ pipx install bisos.aiActivity
 ** 2. Clone this repo to the canonical path
 
 #+begin_src bash
-git clone https://github.com/bxexamples/aiActivityTemplates ~/aiActivityTemplates
+git clone https://github.com/bxObjects/aiActivityTemplates ~/aiActivityTemplates
 #+end_src
 
 The engine auto-detects =~/aiActivityTemplates= on first invocation and
@@ -230,7 +230,7 @@ aiActivity.cs -i userConfig_get --parName=templates
 *If you prefer a different clone path*, run =userConfig_set= explicitly:
 
 #+begin_src bash
-git clone https://github.com/bxexamples/aiActivityTemplates /some/other/path
+git clone https://github.com/bxObjects/aiActivityTemplates /some/other/path
 aiActivity.cs -i userConfig_set --parName=templates --parValue=/some/other/path
 #+end_src
 
@@ -287,7 +287,7 @@ This installs only =CLAUDE.md= (slim; imports only the local trio),
 The whole point of this repo being separate from the engine is that
 users can *fork it and customize* for their own conventions:
 
-- Fork =bxexamples/aiActivityTemplates= on GitHub.
+- Fork =bxObjects/aiActivityTemplates= on GitHub.
 - Edit =mother/CLAUDE.md=, =mother/=, =mother/AI-WORKFLOW.org=
   to reflect your team's conventions.
 - Add your own activity directories (=./my-team-python/=, =./my-lab-notes/=, ...).
